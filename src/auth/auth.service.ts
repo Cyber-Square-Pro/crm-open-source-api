@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -16,6 +16,8 @@ export class AuthService {
     private readonly passwordModel: Model<Password>
   ){}
 
+  private readonly logger = new Logger(AuthService.name);
+
   async signup(signupAuthDto: SignupAuthDto) {
     try{
       const userFoundAlready = await this.userModel.findOne({email: signupAuthDto.email});
@@ -24,17 +26,17 @@ export class AuthService {
       } else {
         return {statusCode: HttpStatus.OK, message: 'signup.success'};
       }
-      
     }catch(e){
+      this.logger.error(e);
       return {statusCode: HttpStatus.INTERNAL_SERVER_ERROR, message: ''};
     }
   }
 
   async login(loginAuthDto:LoginAuthDto) {
     try{
-      
       return {statusCode: HttpStatus.OK, message: ''};
     }catch(e){
+      this.logger.error(e);
       return {statusCode: HttpStatus.INTERNAL_SERVER_ERROR, message: ''};
     }
   }

@@ -8,9 +8,19 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseModelInterceptor } from './common/interceptor/response.interceptor';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import * as path from 'path';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './common/config/configuration';
+import { validate } from './common/config/env.validation';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(
+      { isGlobal: true,
+        expandVariables: true,
+        load: [configuration],
+        validate
+      }
+    ),
     MongooseModule.forRoot('mongodb://localhost:27017/crm'),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
