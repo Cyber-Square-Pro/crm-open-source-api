@@ -1,0 +1,17 @@
+{
+    "operation": {
+      "failed": "failed",
+      "success": "success",
+      "incorrect": "email or password incorrect"
+    },
+    "login": {
+      "failed": "failed",
+      "success": "success",
+      "incorrect": "email or password incorrect"
+    },
+    "signup": {
+      "failed": "failed",
+      "success": "success",
+      "incorrect": "email or password incorrect"
+    }
+  }
