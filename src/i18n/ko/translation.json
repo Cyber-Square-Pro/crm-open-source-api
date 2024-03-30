@@ -12,6 +12,7 @@
     "signup": {
       "failed": "failed",
       "success": "success",
-      "incorrect": "email or password incorrect"
+      "incorrect": "email or password incorrect",
+      "exist": "account exist already"
     }
   }

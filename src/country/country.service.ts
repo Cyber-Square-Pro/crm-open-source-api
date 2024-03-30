@@ -13,7 +13,7 @@ export class CountryService {
 
   async findAll(paginationDto: PaginationDTO) {
     try {
-      let { page = 1, pageSize, searchKeyword } = paginationDto;
+      let { page, pageSize, searchKeyword } = paginationDto;
       const aggregationPipeline: any[] = [];
       if (searchKeyword) {
         aggregationPipeline.push({
@@ -30,16 +30,15 @@ export class CountryService {
         });
       }
       if (pageSize) {
-        pageSize = Number(pageSize);
-        page = Number(page);
+        const pageSizeValue = Number(pageSize);
+        const pageValue = Number(page);
         aggregationPipeline.push(
-          { $skip: (page - 1) * pageSize },
-          { $limit: pageSize }
+          { $skip: (pageValue - 1) * pageSizeValue },
+          { $limit: pageSizeValue }
         );
       }
-      
       const countries = await this.countryModel.aggregate(aggregationPipeline).exec();
-      return { statusCode: HttpStatus.OK, message: '', data:countries };
+      return { statusCode: HttpStatus.OK, message: 'operation.success', data:countries };
     } catch (error) {
       console.log(error)
       return { statusCode: HttpStatus.INTERNAL_SERVER_ERROR, message: 'Internal server error' };

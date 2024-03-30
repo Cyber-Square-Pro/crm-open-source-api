@@ -18,14 +18,11 @@ export class User {
   })
   role: string;
 
-  @Prop({trim:true})
+  @Prop({trim:true, default:''})
   photo: string;
 
-  @Prop({trim:true, required:true})
-  passwordHash: string;
-
-  @Prop({ type: mongoose.Types.ObjectId, ref: Country.name, required: true })
-  countryId: mongoose.Types.ObjectId;
+  @Prop({ type: String, trim:true })
+  country: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

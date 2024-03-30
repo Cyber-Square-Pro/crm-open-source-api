@@ -3,10 +3,10 @@ import { IsOptional, IsString } from 'class-validator';
 export class PaginationDTO {
  
   @IsString()
-  page?: number | string;
+  page?: string;
 
   @IsString()
-  pageSize?: number | string;
+  pageSize?: string;
 
   @IsOptional()
   @IsString()
