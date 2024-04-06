@@ -9,10 +9,4 @@ export class SignupAuthDto  extends IntersectionType(LoginAuthDto)
 
     @IsNotEmpty()
     name: string;
-
-    @IsNotEmpty()
-    country: string;
-
-    @IsNotEmpty()
-    timezone: string;
 }

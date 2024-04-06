@@ -32,7 +32,6 @@ export class AuthService {
         const createdUser = await this.userModel.create({
           email,
           name: signupAuthDto.name,
-          country: signupAuthDto.country
         });
         const salt = await bcrypt.genSalt();
         const passwordHash =  await bcrypt.hash(signupAuthDto.password, salt);
@@ -40,10 +39,11 @@ export class AuthService {
           passwordHash,
           userId: createdUser._id
         });
+        const token = await generateTokenPair(this.jwtService, createdUser);
         return {
           statusCode: HttpStatus.OK, 
           message: 'signup.success', 
-          data: {email}
+          data: {email,token}
         };
       }
     }catch(e){

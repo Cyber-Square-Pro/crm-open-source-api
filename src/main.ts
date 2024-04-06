@@ -1,12 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import * as csurf from 'csurf';
+import { ValidationPipe, Logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
+  const logger = new Logger();
   const app = await NestFactory.create(AppModule);
-  // app.use(csurf({ cookie: true }));
   app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe(
@@ -23,6 +22,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(port);
+  await app.listen(port).then(async ()=>{
+    const url = await app.getUrl();
+    logger.log(url);
+  });
 }
 bootstrap();
